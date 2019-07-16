@@ -124,9 +124,9 @@ class SquadReaderForPretrainedBert(DatasetReader):
         # The -3 accounts for [CLS], [SEP] and [SEP]
         max_tokens_for_doc = self._max_sequence_length - len(query_tokens) - 3
 
-        # We can have documents that are longer than the maximum sequence length.
-        # To deal with this we do a sliding window approach, where we take chunks
-        # of the up to our max length with a stride of `doc_stride`.
+        # Different from original pytorch-pretrained-bert,
+        # we don't use a sliding window approach here.
+        # We just truncate the original doc to defined max_sequence_length.
         _DocSpan = collections.namedtuple(  # pylint: disable=invalid-name
                 "DocSpan", ["start", "length"])
         doc_spans = []
@@ -140,6 +140,7 @@ class SquadReaderForPretrainedBert(DatasetReader):
                 break
             start_offset += min(length, self._document_stride)
 
+        #
         for (doc_span_index, doc_span) in enumerate(doc_spans):
             tokens = []
             token_to_orig_map = {}
