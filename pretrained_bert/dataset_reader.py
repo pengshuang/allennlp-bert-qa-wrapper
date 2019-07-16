@@ -192,4 +192,6 @@ class SquadReaderForPretrainedBert(DatasetReader):
                                  "document_tokens": MetadataField(doc_tokens),
                                  "token_to_original_map": MetadataField(token_to_orig_map),
                                  "token_is_max_context": MetadataField(token_is_max_context)})
+            # We truncate the original doc to defined max_sequence_length.
+            # Here we only process the first part of doc_spans and return the result.
             return instance
