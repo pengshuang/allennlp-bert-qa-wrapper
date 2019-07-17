@@ -140,7 +140,6 @@ class SquadReaderForPretrainedBert(DatasetReader):
                 break
             start_offset += min(length, self._document_stride)
 
-        #
         for (doc_span_index, doc_span) in enumerate(doc_spans):
             tokens = []
             token_to_orig_map = {}
